@@ -3,10 +3,14 @@ import psycopg2
 
 class DBStuff(object):
     def __init__(self, dbname, user, password, host, port):
-       self.connection_string = "dbname=postgres user=postgres password=postgres host=db port=5432"
+       self.connection_string = "dbname={0} user={1} password={2} host={3} port={4}".format(dbname,
+                                                                                            user,
+                                                                                            password,
+                                                                                            host,
+                                                                                            port)
 
     def connect(self):
-        self.conn = psycopg2.connect("dbname=postgres user=postgres password=postgres host=db port=5432")
+        self.conn = psycopg2.connect(self.connection_string)
         self.cur = self.conn.cursor()
 
     def query(self, query):
@@ -31,6 +35,12 @@ def main1():
     print db.fetchone()
     db.commit()
     db.close()
-    
+
+class XMLObject(object):
+    def __init__(self):
+        self.xml_template = """ 
+        foo
+        """
+        
 if __name__ == '__main__':
    main1() 
