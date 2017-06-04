@@ -1,3 +1,4 @@
+from string import Template
 import psycopg2
 
 
@@ -38,9 +39,17 @@ def main1():
 
 class XMLObject(object):
     def __init__(self):
-        self.xml_template = """ 
-        foo
+        self.template_string = """ 
+         <beer><name>$name</name><location>$location</location></beer>
         """
-        
+        self.xml_template = Template(self.template_string)
+
+    def stamp_xml(self, name, location):
+        return self.xml_template.substitute(name=name, location=location)
+
+def main2():
+    beers = XMLObject()
+    print beers.stamp_xml("The Curse of Threepwood", "Silchester (Near Reading), United Kingdom")
+    
 if __name__ == '__main__':
-   main1() 
+   main2() 
